@@ -5,13 +5,14 @@
 // @match       https://wqs.jd.com/pingou/dream_factory/*.html?*
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html?*
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @version     1.6
-// @author      zhangdaren(375890534@qq.com)
-// @update      smilewind(385071602@qq.com)
-// @description 2020/3/28 下午4:51:41
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @version     1.7
+// @author      lucas(xxxx@qq.com)
+// @update      lucas(xxxx@qq.com)
+// @description 2020/4/19 下午4:51:41
 // ==/UserScript==
+// 
 (function() {
     console.log('奥利给！！！京喜工厂自动收取电力，开干~');
     console.log('每天7～21点之间自动加电~');
