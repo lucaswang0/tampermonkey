@@ -7,7 +7,7 @@
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html?*
 // @grant        GM_getValue
 // @grant        GM_setValue
-// @version     1.5
+// @version     1.6
 // @author      zhangdaren(375890534@qq.com)
 // @update      smilewind(385071602@qq.com)
 // @description 2020/3/28 下午4:51:41
