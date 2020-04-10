@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://daojia.jd.com/taroh5/h5dist/*
 // @grant       none
-// @version     1.0
+// @version     1.1
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
 // @description 2020/3/28 下午4:51:41
@@ -45,7 +45,8 @@ function lifecycle() {
                 console.log("开始浇水啦");
                 //document.getElementById("alternator").click();
                 setTimeout(function() {
-                    document.getElementsByClassName("index-module__num___3PYky")[1].click();
+                    //document.getElementsByClassName("index-module__num___3PYky")[1].click();
+                    document.getElementsByClassName("taro-img index-module__bubble_new___1kUb6")[0].click()
                            },3000);
             };
 
