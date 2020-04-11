@@ -4,12 +4,12 @@
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/*
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/moneytree/index/*
 // @match       https://active.jd.com/forever/btgoose/*
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @version     1.2
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @version     1.3
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/3/28 下午4:51:41
+// @description 2020/4/10 下午4:51:41
 // ==/UserScript==
 
 (function() {

@@ -3,10 +3,10 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://daojia.jd.com/taroh5/h5dist/*
 // @grant       none
-// @version     1.1
+// @version     1.2
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/3/28 下午4:51:41
+// @description 2020/04/10 下午4:51:41
 // ==/UserScript==
 
 (function() {
@@ -19,7 +19,7 @@
 function lifecycle() {
     let timeid = setInterval(function() {
         var now = new Date();
-     
+
         if (document.getElementsByClassName("index-module__dropNum___2l8LP")) {
             var num = document.getElementsByClassName("index-module__dropNum___2l8LP")[0].innerText;
             //console.log("水滴 ->> " + num);
@@ -44,10 +44,8 @@ function lifecycle() {
             if (num1 >= 100) {
                 console.log("开始浇水啦");
                 //document.getElementById("alternator").click();
-                setTimeout(function() {
-                    //document.getElementsByClassName("index-module__num___3PYky")[1].click();
-                    document.getElementsByClassName("taro-img index-module__bubble_new___1kUb6")[0].click()
-                           },3000);
+                document.getElementsByClassName("taro-img index-module__bubble_new___1kUb6")[0].click()
+
             };
 
             if (document.getElementsByClassName("index-module__levelUpBtn___12Gn0")[0]) {
@@ -56,16 +54,16 @@ function lifecycle() {
             };
 
             if (document.getElementsByClassName("index-module__bean___NYhSu")) {
-               console.log("点点树偶尔获取水滴");
-               setTimeout(function() {
-                   document.getElementsByClassName("index-module__bean___NYhSu")[0].click();
-                  },4000);
+                console.log("点点树偶尔获取水滴");
+                setTimeout(function() {
+                    document.getElementsByClassName("index-module__bean___NYhSu")[0].click();
+                },4000);
             };
 
-//             if (document.getElementsByClassName("index-module__closeBtn___PN4wM")) {
-//                console.log("点点树关闭");
-//                document.getElementsByClassName("index-module__closeBtn___PN4wM")[0].click()
-//             };
-};
-	},2000);
+            //             if (document.getElementsByClassName("index-module__closeBtn___PN4wM")) {
+            //                console.log("点点树关闭");
+            //                document.getElementsByClassName("index-module__closeBtn___PN4wM")[0].click()
+            //             };
+        };
+    },2000);
 }
