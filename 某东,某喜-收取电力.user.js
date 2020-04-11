@@ -8,16 +8,13 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @version     1.7
-// @author      lucas(xxxx@qq.com)
-// @update      lucas(xxxx@qq.com)
-// @description 2020/4/19 下午4:51:41
+// @author      lucas(xxxxx@qq.com)
+// @update      lucas(xxxxx@qq.com)
+// @description 2020/4/10 下午4:51:41
 // ==/UserScript==
-// 
 (function() {
     console.log('奥利给！！！京喜工厂自动收取电力，开干~');
     console.log('每天7～21点之间自动加电~');
-    GM_setValue("add_dream","加电");
-    GM_setValue("all_num",0);
     setTimeout(function(){lifecycle();},1000);
 })();
 
@@ -26,23 +23,32 @@ function sleep(ms) {
     while (new Date().getTime() < start + ms);
 }
 
-function log(text) {
-    text='%c ' + text
+function log(text1,text2,text3) {
+    if (typeof(text2) == "undefined") {text2=""};
+    if (typeof(text3) == "undefined") {text3=""};
+    var text='%c ' + text1 + text2 + text3
     console.log(text, 'color: #43bb88;font-size: 18px;font-weight: bold;text-decoration: underline;');
 }
 
 function lifecycle() {
+    GM_setValue("add_dream","加电");
+    GM_setValue("all_num",0);
+    var start_time = new Date();
+    start_time=start_time.toLocaleString();
+    GM_setValue("start_time",start_time);
+    var start_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
+    GM_setValue("start_count",start_count);
     let timeid = setInterval(function() {
         //自动加电力
+        var num=0;
         var add_dream = GM_getValue("add_dream");
         var myDate = new Date();
+        var now_time=myDate.toLocaleString();
         var hours=myDate.getHours();
-        var mytime=myDate.toLocaleString();
         //console.log(mytime + " add_dream:" + add_dream);
         if (hours>=7&&hours<=20&&add_dream=="加电") {
             log("工作时间，加电力。")
             document.getElementsByClassName("icon icon_add")[0].click();
-            sleep(500);
             if (document.getElementsByClassName("g_error_body")[0]) {
                 var reg = RegExp(/加电上限/);
                 var ERR = document.getElementsByClassName("g_error_body")[0].innerText;
@@ -52,7 +58,7 @@ function lifecycle() {
                 }
             }
         } else if (hours<7||hours>20) {
-            log("未在加电时间，恢复变量.");
+            //log("未在加电时间，恢复变量.");
             GM_setValue("add_dream","加电");
         }
         if (document.getElementsByClassName("g_error_btn")[0]) {
@@ -61,17 +67,17 @@ function lifecycle() {
 
         //自动获取电力
         if (document.querySelector(".alternator-num-n")) {
-            var num = document.querySelector(".alternator-num-n").innerText;
-            //console.log("监测电力值 ->> " + num);
+            num = document.querySelector(".alternator-num-n").innerText;
             num = parseFloat(num);
-            if (num >= 300) {
+            //console.log("监测电力值 ->> " + num);
+            if (num >= 200) {
                 //log(mytime + " 电力值到" + num + "啦!!!");
-                var all_num = GM_getValue("all_num");
-                all_num = parseFloat(all_num) + num;
-                GM_setValue("all_num",all_num);
-                log(mytime + " 领取" + num + "，刷新后已累计收取电力：" + all_num);
+                // var all_num = GM_getValue("all_num");
+                // all_num = parseFloat(all_num) + num;
+                // GM_setValue("all_num",all_num);
+
                 document.getElementById("alternator").click();
-                sleep(500)
+                //sleep(500)
                 if (document.getElementsByClassName('simple_dialog_txt_btn_txt')[0]) {
                     document.getElementsByClassName('simple_dialog_txt_btn_txt')[0].click();
                 }
@@ -79,21 +85,25 @@ function lifecycle() {
                 if (document.getElementsByClassName("close")[0]) {
                     document.getElementsByClassName("close")[0].click();
                 }
-            }
-        } else if (document.querySelector(".floating_title===========")) {
-            var secStr = document.querySelector(".floating_title").innerText;
-            console.log("监测倒计时 ->> " + secStr);
-            if (secStr === "已完成") {
-                console.log("完成啦")
-                document.querySelector(".floating_title").click();
-                clearInterval(timeid);
+                //sleep(3500)
                 setTimeout(function() {
-                    lifecycle();
-                }, 2000)
-            } else if (secStr === "30s") {
-                console.log("滑动页面")
-                document.querySelector(".scroll-view").scrollTo(0, 800);
+                var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
+                log("开始时间：" + start_time + " 开始电力：" + start_count,'\n',"当前时间: " + now_time + " 现在电力：" + now_count);},5000);
             }
-        }
+        } //else if (document.querySelector(".floating_title===========")) {
+        //     var secStr = document.querySelector(".floating_title").innerText;
+        //     console.log("监测倒计时 ->> " + secStr);
+        //     if (secStr === "已完成") {
+        //         console.log("完成啦")
+        //         document.querySelector(".floating_title").click();
+        //         clearInterval(timeid);
+        //         setTimeout(function() {
+        //             lifecycle();
+        //         }, 2000)
+        //     } else if (secStr === "30s") {
+        //         console.log("滑动页面")
+        //         document.querySelector(".scroll-view").scrollTo(0, 800);
+        //     }
+        // }
     }, 4000);
 }

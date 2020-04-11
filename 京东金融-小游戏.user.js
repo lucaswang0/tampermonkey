@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        京东金融--小游戏
+// @name        京东金融-小游戏
 // @namespace   Violentmonkey Scripts
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/*
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/moneytree/index/*
@@ -65,13 +65,24 @@ function lifecycle() {
 
         var sign=GM_getValue("sign");
         var hours=myDate.getHours();
-        if (hours>=7&&hours<=8&&sign=="签到") {
-            document.getElementsByClassName("main-icon main-icon-sign")[0].click();
+        if (hours==7&&sign=="签到") {
+
+            if ( document.getElementsByClassName("main-icon main-icon-sign")[0]) {
+                document.getElementsByClassName("main-icon main-icon-sign")[0].click();
+            };
+            if (document.getElementsByClassName("sign-btn-disable")[0]) {
+                GM_setValue("sign","已签");
+            }
+
             if (document.getElementsByClassName("sign-btn")[0]) {
                 document.getElementsByClassName("sign-btn")[0].click();
                 GM_setValue("sign","已签");
-            }
-        } else if(hours<7||hours>8) {
+            };
+            if ( document.getElementsByClassName("sign-close")[0]) {
+                document.getElementsByClassName("sign-close")[0].click();
+            };
+
+        } else if(hours!=7) {
             GM_setValue("sign","签到")
         }
         //定时抽奖
@@ -117,11 +128,11 @@ function lifecycle() {
             console.log("鹅蛋->>" + egg );
             if (egg>=30) {
                 console.log("收鹅蛋了");
-                setTimeout(function() {
-                    if (document.getElementsByClassName("main-stage")[0].children[0]) {
-                        document.getElementsByClassName("main-stage")[0].children[0].click();
-                    };
-                },2000);
+
+                if (document.getElementsByClassName("main-stage")[0].children[0]) {
+                    document.getElementsByClassName("main-stage")[0].children[0].click();
+                };
+
             };
         };
 
