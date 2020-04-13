@@ -53,6 +53,7 @@ function lifecycle() {
                 var s = document.getElementsByClassName("tree-volume")[0].innerText;
                 var num = document.getElementsByClassName("tree-curnum")[0].innerText;
                 var numup= s.replace(/[^0-9]/ig,"");
+                num = num.replace(/[^0-9]/ig,"");
                 numup = parseFloat(numup);
                 num = parseFloat(num);
                 log("金果 ->> " + num + "/" + numup );
@@ -113,6 +114,9 @@ function lifecycle() {
             if(str.match(reg)){
                 log("免费抽");
                 document.getElementsByClassName("luck-btngroup")[0].children[0].click();
+                if (document.getElementsByClassName("precious-btn")[0]) {
+                    document.getElementsByClassName("precious-btn")[0].click();
+                };
             }
             else if (str.match(reg1)){
                 log("要金币，退出");
@@ -120,9 +124,7 @@ function lifecycle() {
             }
 
         }
-        if (document.getElementsByClassName("precious-btn")[0]) {
-            document.getElementsByClassName("precious-btn")[0].click();
-        };
+
 
 
         //小猪吃完了么,看看能否喂食了
