@@ -9,24 +9,41 @@
 // @version     1.3
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/4/10 下午4:51:41
+// @description 2020/4/12 下午4:51:41
 // ==/UserScript==
 
 (function() {
-    console.log('奥利给！！！仙豆庄园领水滴了，开干~');
-    GM_setValue("sign","签到")
     setTimeout(function(){
         lifecycle();
     }, 4000);
 })();
 
+function log(text1,text2,text3) {
+    if (typeof(text2) == "undefined") {text2=""};
+    if (typeof(text3) == "undefined") {text3=""};
+    var text='%c ' + text1 + text2 + text3
+    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
+}
+
 function lifecycle() {
+
+    log('奥利给！！！小游戏聚合，开干~');
+    GM_setValue("sign","签到")
+
     let timeid = setInterval(function() {
         var myDate = new Date();
+        var hours=myDate.getHours();
+        var mins=myDate.getMinutes();
+        var secs=myDate.getSeconds();
+
+        //0:0:0~0:0:10刷新一次
+        if (hours==0&&mins==0&&(secs>=0&&secs<=10)) {
+            window.location.reload();
+        }
 
         //金果==========================================
         if (document.getElementsByClassName("modal-btn")[0]) {
-            console.log("需要APP,退出");
+            log("需要APP,退出");
             setTimeout(function() {
                 document.getElementsByClassName("modal-close")[0].click();
             },4000);
@@ -38,9 +55,9 @@ function lifecycle() {
                 var numup= s.replace(/[^0-9]/ig,"");
                 numup = parseFloat(numup);
                 num = parseFloat(num);
-                console.log("金果 ->> " + num + "/" + numup );
-                if (num >= 100) {
-                    console.log("金果到400啦")
+                log("金果 ->> " + num + "/" + numup );
+                if (num >= 2000) {
+                    log("金果到" + num);
                     //document.getElementById("alternator").click();
                     document.getElementsByClassName("tree-btn")[0].children[0].click()
                     //document.getElementsByClassName('close')[0].click();
@@ -54,17 +71,16 @@ function lifecycle() {
         }
         //小猪======================================
         if (document.getElementsByClassName("precious precious-one precious-pos-1 springback")[0]) {
-            console.log("小猪礼盒1");
+            log("小猪礼盒1");
             document.getElementsByClassName("precious precious-one precious-pos-1 springback")[0].click();
         };
         if (document.getElementsByClassName("precious precious-one precious-pos-2 springback")[0]) {
-            console.log("小猪礼盒2");
+            log("小猪礼盒2");
             document.getElementsByClassName("precious precious-one precious-pos-2 springback")[0].click();
         };
         //签到
 
         var sign=GM_getValue("sign");
-        var hours=myDate.getHours();
         if (hours==7&&sign=="签到") {
 
             if ( document.getElementsByClassName("main-icon main-icon-sign")[0]) {
@@ -90,20 +106,19 @@ function lifecycle() {
         if ( Min%30 === 0&&document.getElementsByClassName("cloud-foot")[0] ) {
             document.getElementsByClassName("cloud-foot")[0].children[0].click();
 
-            setTimeout(function() {
-                var str = document.getElementsByClassName("luck-btngroup")[0].children[0].innerText;
-                var reg = RegExp(/免费/);
-                var reg1 = RegExp(/金币/);
-                if(str.match(reg)){
-                    console.log("免费抽");
-                    document.getElementsByClassName("luck-btngroup")[0].children[0].click();
-                }
-                else if (str.match(reg1)){
-                    console.log("要金币，退出");
-                    document.getElementsByClassName("luck-close")[0].click();
-                }
 
-            },2000);
+            var str = document.getElementsByClassName("luck-btngroup")[0].children[0].innerText;
+            var reg = RegExp(/免费/);
+            var reg1 = RegExp(/金币/);
+            if(str.match(reg)){
+                log("免费抽");
+                document.getElementsByClassName("luck-btngroup")[0].children[0].click();
+            }
+            else if (str.match(reg1)){
+                log("要金币，退出");
+                document.getElementsByClassName("luck-close")[0].click();
+            }
+
         }
         if (document.getElementsByClassName("precious-btn")[0]) {
             document.getElementsByClassName("precious-btn")[0].click();
@@ -112,12 +127,11 @@ function lifecycle() {
 
         //小猪吃完了么,看看能否喂食了
         if (document.getElementsByClassName("draw-feed-btn")[0]) {
-            console.log("猪喂食啦！");
-            setTimeout(function() {
-                document.getElementsByClassName("draw-feed-btn")[0].children[0].click();
-                document.getElementsByClassName("feed-item-btn")[0].click();
-                document.getElementsByClassName("feed-close")[0].click();
-            },2000);
+            log("猪喂食啦！");
+            document.getElementsByClassName("draw-trough-img")[0].click();
+            //document.getElementsByClassName("feed-list")[0].children[0].click();
+            document.getElementsByClassName("feed-item-btn")[0].click();
+            document.getElementsByClassName("feed-close")[0].click();
         };
 
 
@@ -125,9 +139,9 @@ function lifecycle() {
         if (document.getElementsByClassName("stage-num udc-bold")[0]) {
             var egg=document.getElementsByClassName("stage-num udc-bold")[0].innerText
             egg=parseFloat(egg);
-            console.log("鹅蛋->>" + egg );
+            log("鹅蛋->>" + egg );
             if (egg>=30) {
-                console.log("收鹅蛋了");
+                log("收鹅蛋了");
 
                 if (document.getElementsByClassName("main-stage")[0].children[0]) {
                     document.getElementsByClassName("main-stage")[0].children[0].click();
