@@ -8,7 +8,7 @@
 // @version     1.3
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/04/14 下午4:51:41
+// @description 京东到家的仙豆庄园，每天自动收水，浇水。 F12调试模式手机模式： https://daojia.jd.com/
 // ==/UserScript==
 
 (function() {

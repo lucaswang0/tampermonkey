@@ -1,13 +1,14 @@
 // ==UserScript==
-// @name         京东金融-大家都在玩
+// @name        京东金融-大家都在玩
 // @namespace   https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
 // @updateURL   https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
 // @downloadURL https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
-// @match        https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html?utm_source=Android*url*1586136923412&utm_medium=jrappshare&utm_term=wxfriends&from=singlemessage
-// @grant        none
+// @match       https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html?utm_source=Android*url*1586136923412&utm_medium=jrappshare&utm_term=wxfriends&from=singlemessage
+// @grant       none
+// @version     0.2
+// @author      Lucas(?????????@qq.com)
+// @update      Lucas(?????????@qq.com)
+// @description 京东金融大家都在玩游戏列表. F12调试模式手机模式：https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html,配合https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
 // ==/UserScript==
 
 

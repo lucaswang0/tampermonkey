@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name        京东金融-小游戏
-// @namespace   Violentmonkey Scripts
+// @namespace   https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
+// @updateURL   https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
+// @downloadURL https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/*
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/moneytree/index/*
 // @match       https://active.jd.com/forever/btgoose/*
@@ -9,7 +11,7 @@
 // @version     1.4
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/4/14 下午4:51:41
+// @description 京东里面的一些小游戏. F12调试模式手机模式：https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html
 // ==/UserScript==
 
 (function() {
