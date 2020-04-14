@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name        京东到家-仙豆庄园
-// @namespace   Violentmonkey Scripts
+// @namespace   https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
+// @updateURL   https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
+// @downloadURL https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
 // @match       https://daojia.jd.com/taroh5/h5dist/*
 // @grant       none
-// @version     1.2
+// @version     1.3
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/04/13 下午4:51:41
+// @description 2020/04/14 下午4:51:41
 // ==/UserScript==
 
 (function() {
@@ -24,6 +26,7 @@ function log(text1,text2,text3) {
 
 function lifecycle() {
     log('奥利给！！！仙豆庄园领水滴了，开干~');
+    log(new Date());
     let timeid = setInterval(function() {
         var myDate = new Date();
         var hours=myDate.getHours();

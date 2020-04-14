@@ -6,10 +6,10 @@
 // @match       https://active.jd.com/forever/btgoose/*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.3
+// @version     1.4
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 2020/4/12 下午4:51:41
+// @description 2020/4/14 下午4:51:41
 // ==/UserScript==
 
 (function() {
@@ -28,6 +28,8 @@ function log(text1,text2,text3) {
 function lifecycle() {
 
     log('奥利给！！！小游戏聚合，开干~');
+    log(new Date());
+
     GM_setValue("sign","签到")
 
     let timeid = setInterval(function() {
@@ -36,10 +38,15 @@ function lifecycle() {
         var mins=myDate.getMinutes();
         var secs=myDate.getSeconds();
 
+
+
+
+
         //0:0:0~0:0:10刷新一次
         if (hours==0&&mins==0&&(secs>=0&&secs<=10)) {
             window.location.reload();
         }
+
 
         //金果==========================================
         if (document.getElementsByClassName("modal-btn")[0]) {
@@ -47,6 +54,7 @@ function lifecycle() {
             setTimeout(function() {
                 document.getElementsByClassName("modal-close")[0].click();
             },4000);
+            window.location.replace("https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html?utm_source=Android*url*1586136923412&utm_medium=jrappshare&utm_term=wxfriends&from=singlemessage");
         }
         else {
             if (document.getElementsByClassName("tree-volume")[0]) {
@@ -57,10 +65,13 @@ function lifecycle() {
                 numup = parseFloat(numup);
                 num = parseFloat(num);
                 log("金果 ->> " + num + "/" + numup );
-                if (num >= 2000) {
+                if (num >= 20) {
                     log("金果到" + num);
                     //document.getElementById("alternator").click();
-                    document.getElementsByClassName("tree-btn")[0].children[0].click()
+                    document.getElementsByClassName("tree-btn")[0].children[0].click();
+                    //返回到主页
+                    window.location.replace("https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html?utm_source=Android*url*1586136923412&utm_medium=jrappshare&utm_term=wxfriends&from=singlemessage");
+
                     //document.getElementsByClassName('close')[0].click();
                     //clearInterval(timeid);
                     //setTimeout(function() {

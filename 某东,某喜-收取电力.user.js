@@ -7,10 +7,10 @@
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html?*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.8
+// @version     1.9
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
-// @description 2020/4/13 下午4:51:41
+// @description 2020/4/14 下午4:51:41
 // ==/UserScript==
 (function() {
 
@@ -32,6 +32,7 @@ function log(text1,text2,text3) {
 function lifecycle() {
     log('奥利给！！！京喜工厂自动收取电力，开干~');
     log('每天7～21点之间自动加电~');
+    log(new Date());
     //初始化加电状态
     var add_dream = GM_getValue("add_dream");
     if (typeof(add_dream)=="undefined") {
