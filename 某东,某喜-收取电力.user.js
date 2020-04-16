@@ -1,8 +1,6 @@
 // ==UserScript==
-// @name        某东,某喜-收取电力
+// @name        京东京喜-收取电力
 // @namespace   https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
-// @updateURL   https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
-// @downloadURL https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
 // @match       https://wqs.jd.com/pingou/dream_factory/*.html
 // @match       https://wqs.jd.com/pingou/dream_factory/*.html?*
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html
