@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name        京喜财福岛
-// @namespace   https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
+// @namespace   https://greasyfork.org/zh-CN/scripts/401011-%E4%BA%AC%E5%96%9C%E8%B4%A2%E7%A6%8F%E5%B2%9B
 // @match       https://wqs.jd.com/fortune_island/index.html*
 // @match       https://wq.jd.com/webportal/event/*
 // @grant       GM_getValue
