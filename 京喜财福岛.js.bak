@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name        京喜财福岛
-// @namespace   https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
+// @namespace   https://greasyfork.org/zh-CN/scripts/401011-%E4%BA%AC%E5%96%9C%E8%B4%A2%E7%A6%8F%E5%B2%9B
 // @match       https://wqs.jd.com/fortune_island/index.html*
 // @match       https://wq.jd.com/webportal/event/*
 // @grant       GM_getValue
@@ -37,23 +37,6 @@ function lifecycle() {
     var i=0;
 
     let timeid = setInterval(function() {
-
-
-
-        var myDate = new Date();
-        var hours=myDate.getHours();
-        var mins=myDate.getMinutes();
-        var secs=myDate.getSeconds();
-
-        //0:6:0~0:0:10刷新一次
-        if (hours==6&&mins==0&&(secs>=0&&secs<=10)) {
-            window.location.reload();
-        }
-
-
-        var now_time=myDate.toLocaleString();
-        log(now_time);
-
         //岛主
         if (document.getElementsByClassName("is-has-money")[0]) {
             if (document.getElementsByClassName("is-has-money")[0].className=="is-has-money") {
@@ -66,15 +49,13 @@ function lifecycle() {
         if (document.getElementsByClassName("head-icon has-money")[0]) {
             var worker=document.getElementsByClassName("head-icon has-money").length
             i=0
-            log("发现工人：",worker)
+            log("共有打工仔：",worker)
             if(worker>0) {
                 while (i<worker) {
                     //log(i);
                     if (document.getElementsByClassName("head-icon has-money")[i].className=="head-icon has-money") {
-                        log("收工钱:",i)
-
+                        log("收打工仔:",i)
                         document.getElementsByClassName("head-icon has-money")[i].click();
-
                     }
                     i++
                 }
@@ -88,7 +69,7 @@ function lifecycle() {
                 if (document.getElementsByClassName("pop-window")) {
                     var friends=document.getElementsByClassName("friends-content-detail").length;
                     i=0
-                    log("发现好友:",friends)
+                    log("共有好友:",friends)
                     if(friends>0) {
                         while (i<friends) {
                             //log(i);
@@ -160,5 +141,5 @@ function lifecycle() {
         }
 
 
-    }, 1800000);
+    }, 60000);
 }

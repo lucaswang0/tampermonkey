@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name        京东金融-小游戏
 // @namespace   https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
+// @updateURL   https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
+// @downloadURL https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/*
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/moneytree/index/*
 // @match       https://active.jd.com/forever/btgoose/*
@@ -38,10 +40,15 @@ function lifecycle() {
         var mins=myDate.getMinutes();
         var secs=myDate.getSeconds();
 
-        //0:6:0~0:0:10刷新一次
-        if (hours==6&&mins==0&&(secs>=0&&secs<=10)) {
+
+
+
+
+        //0:0:0~0:0:10刷新一次
+        if (hours==0&&mins==0&&(secs>=0&&secs<=10)) {
             window.location.reload();
         }
+
 
         //金果==========================================
         if (document.getElementsByClassName("modal-btn")[0]) {
@@ -76,8 +83,6 @@ function lifecycle() {
                 };
             };
         }
-
-
         //小猪======================================
         if (document.getElementsByClassName("precious precious-one precious-pos-1 springback")[0]) {
             log("小猪礼盒1");
@@ -88,8 +93,10 @@ function lifecycle() {
             document.getElementsByClassName("precious precious-one precious-pos-2 springback")[0].click();
         };
         //签到
+
         var sign=GM_getValue("sign");
         if (hours==7&&sign=="签到") {
+
             if ( document.getElementsByClassName("main-icon main-icon-sign")[0]) {
                 document.getElementsByClassName("main-icon main-icon-sign")[0].click();
             };
@@ -112,6 +119,8 @@ function lifecycle() {
         var Min=parseInt(myDate.getMinutes());
         if ( Min%30 === 0&&document.getElementsByClassName("cloud-foot")[0] ) {
             document.getElementsByClassName("cloud-foot")[0].children[0].click();
+
+
             var str = document.getElementsByClassName("luck-btngroup")[0].children[0].innerText;
             var reg = RegExp(/免费/);
             var reg1 = RegExp(/金币/);
@@ -125,11 +134,12 @@ function lifecycle() {
             else if (str.match(reg1)){
                 log("要金币，退出");
                 document.getElementsByClassName("luck-close")[0].click();
-                if (document.getElementsByClassName("precious-btn")[0]) {
-                    document.getElementsByClassName("precious-btn")[0].click();
-                };
             }
+
         }
+
+
+
         //小猪吃完了么,看看能否喂食了
         if (document.getElementsByClassName("draw-feed-btn")[0]) {
             log("猪喂食啦！");
@@ -147,15 +157,12 @@ function lifecycle() {
             log("鹅蛋->>" + egg );
             if (egg>=30) {
                 log("收鹅蛋了");
+
                 if (document.getElementsByClassName("main-stage")[0].children[0]) {
                     document.getElementsByClassName("main-stage")[0].children[0].click();
                 };
 
             };
-        };
-
-        if (document.getElementsByClassName("dialog-btn-area")[0]) {
-            document.getElementsByClassName("dialog-btn-area")[0].children[0].click();
         };
 
 
