@@ -83,8 +83,9 @@ function lifecycle() {
         //自动加电力
         add_dream = GM_getValue("add_dream");
         var now_time=myDate.toLocaleString();
+        var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
         //console.log(mytime + " add_dream:" + add_dream);
-        if (hours>=7&&hours<=20&&add_dream=="加电") {
+        if (hours>=7&&hours<=20&&add_dream=="加电"&&now_count>=100) {
             log("工作时间，加电力。")
             document.getElementsByClassName("icon icon_add")[0].click();
             if (document.getElementsByClassName("g_error_body")[0]) {
