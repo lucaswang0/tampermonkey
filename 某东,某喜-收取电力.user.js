@@ -13,8 +13,11 @@
 // @description 京东惊喜梦工厂. F12调试模式手机模式：https://wqs.jd.com/pingou/dream_factory/index.html
 // ==/UserScript==
 (function() {
-    setTimeout(function(){lifecycle();},4000);
-    setTimeout(function(){tasklist();},4000);
+    setTimeout(function(){
+        reloadpage();
+        lifecycle();
+        tasklist();
+    },4000);
 })();
 
 function sleep(ms) {
@@ -28,6 +31,24 @@ function log(text1,text2,text3) {
     var text='%c ' + text1 + text2 + text3
     console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
 }
+
+
+function reloadpage() {
+    let timeid = setInterval(function() {
+        var myDate = new Date();
+        var hours=myDate.getHours();
+        var mins=myDate.getMinutes();
+        var secs=myDate.getSeconds();
+        var url=window.location.href;
+
+        //每4小时刷新一下当前页面
+        var reload=(hours%4);
+        if (reload==0&&mins==0&&secs<10) {
+            window.location.reload();
+        };
+    }, 60000);
+}
+
 
 function lifecycle() {
     log('奥利给！！！京喜工厂自动收取电力，开干~');
@@ -51,27 +72,17 @@ function lifecycle() {
         var mins=myDate.getMinutes();
         var secs=myDate.getSeconds();
 
-        //0:6:0~0:0:10刷新一次
-        if (hours==6&&mins==0&&(secs>=0&&secs<=10)) {
-            window.location.reload();
-        }
-
-
-        //抢购商品
+        //点击需要抢购商品的页面，会自动抢购，该功能未测试。
         if (document.getElementsByClassName("sku_detail_btn")[0]) {
             var a=0;
             while (a<1000) {
-                console.log(a);
+                log("正在抢购");
                 if (document.getElementsByClassName("sku_detail_btn")[0].className=="sku_detail_btn") {
                     document.getElementsByClassName("sku_detail_btn")[0].click();
                 }
                 a++;
             }
-
         }
-
-
-
 
         //获取当前电量
         var start_count=GM_getValue("start_count");
@@ -80,7 +91,7 @@ function lifecycle() {
             GM_setValue("start_count",start_count);
         }
 
-        //自动加电力
+        //自动加电力 7~21点，电力大于100
         add_dream = GM_getValue("add_dream");
         var now_time=myDate.toLocaleString();
         var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
@@ -124,12 +135,6 @@ function lifecycle() {
                     log("开始时间：" + start_time + " 开始电力：" + start_count,'\n'," 当前时间: " + now_time + " 现在电力：" + now_count);},5000);
             }
 
-            //close
-            //             if(document.getElementsByClassName("close")[0]) {
-            //                 document.getElementsByClassName("close")[0].click();
-            //                 log("close")
-            //             }
-
         } //else if (document.querySelector(".floating_title===========")) {
         //     var secStr = document.querySelector(".floating_title").innerText;
         //     console.log("监测倒计时 ->> " + secStr);
@@ -145,9 +150,11 @@ function lifecycle() {
         //         document.querySelector(".scroll-view").scrollTo(0, 800);
         //     }
         // }
-    }, 4000);
+    }, 10000);
 }
 
+
+//自动收已完成的任务
 function tasklist() {
     //log("task1");
     let timeid = setInterval(function() {
@@ -165,33 +172,30 @@ function tasklist() {
             document.getElementsByClassName("icon icon_task")[0].click()
         }
 
-setTimeout(function() {
-        if (document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0] ) {
-            //log("task5");
-            var task=document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children.length;
-            var i=0;
-            while (i<task) {
-                var taskclassname=document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children[i].children[2].children[1].className
-                //log(taskclassname)
-                if (taskclassname=="task_item_btn btn_type_2") {
-                    log("task6");
-                    document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children[i].children[2].children[1].click()
+        setTimeout(function() {
+            if (document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0] ) {
+                //log("task5");
+                var task=document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children.length;
+                var i=0;
+                while (i<task) {
+                    var taskclassname=document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children[i].children[2].children[1].className
+                    //log(taskclassname)
+                    if (taskclassname=="task_item_btn btn_type_2") {
+                        log("task6");
+                        document.getElementsByClassName("scroll-view task_box_scroll scroll-y")[0].children[i].children[2].children[1].click()
+                    };
+                    i++;
                 };
-                i++;
+
+                setTimeout(function() {
+                    //close
+                    document.getElementsByClassName("close")[0].click();
+                    //log("close")
+                }, 2000)
+
             };
-
-            setTimeout(function() {
-                //close
-                document.getElementsByClassName("close")[0].click();
-                //log("close")
-            }, 2000)
-
-        };
-     }, 4000)
-
-
-
-    }, 180000);
+        }, 4000)
+    }, 1200000);
 
 
 }

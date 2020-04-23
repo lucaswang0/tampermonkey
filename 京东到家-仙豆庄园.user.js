@@ -11,6 +11,7 @@
 
 (function() {
     setTimeout(function(){
+        reloadpage();
         lifecycle();
     }, 4000);
 })();
@@ -21,6 +22,23 @@ function log(text1,text2,text3) {
     var text='%c ' + text1 + text2 + text3
     console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
 }
+
+function reloadpage() {
+    let timeid = setInterval(function() {
+        var myDate = new Date();
+        var hours=myDate.getHours();
+        var mins=myDate.getMinutes();
+        var secs=myDate.getSeconds();
+        var url=window.location.href;
+
+        //每4小时刷新一下当前页面
+        var reload=(hours%4);
+        if (reload==0&&mins==0&&secs<10) {
+            window.location.reload();
+        };
+    }, 60000);
+}
+
 
 function lifecycle() {
     log('奥利给！！！仙豆庄园领水滴了，开干~');

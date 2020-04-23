@@ -10,10 +10,13 @@
 // @version     1.0
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
-// @description 京东惊喜梦工厂. F12调试模式手机模式：https://wqsh.jd.com/pingou/task_center/task/index.html?tasktype=3
+// @description 京东惊喜打卡任务. F12调试模式手机模式：https://wqsh.jd.com/pingou/taskcenter/index.html
 // ==/UserScript==
 (function() {
-    setTimeout(function(){lifecycle();},4000);
+    setTimeout(function(){
+        reloadpage();
+        lifecycle();
+    },4000);
     //setTimeout(function(){tasklist();},4000);
 })();
 
@@ -29,11 +32,27 @@ function log(text1,text2,text3) {
     console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
 }
 
+function reloadpage() {
+    let timeid = setInterval(function() {
+        var myDate = new Date();
+        var hours=myDate.getHours();
+        var mins=myDate.getMinutes();
+        var secs=myDate.getSeconds();
+        var url=window.location.href;
+
+        //每4小时刷新一下当前页面
+        var reload=(hours%4);
+        if (reload==0&&mins==0&&secs<10) {
+            window.location.reload();
+        };
+    }, 60000);
+}
+
 function lifecycle() {
     log('奥利给！！！京喜任务集市，开干~');
     log(new Date());
 
-    //初始化加电状态
+    //初始化变量
     var reload = GM_getValue("reload");
     if (typeof(reload)=="undefined") {
         GM_setValue("reload","start");
@@ -70,24 +89,31 @@ function lifecycle() {
             GM_setValue("signcard","start");
         }
 
-        if (hours>=6&&hours<=8&&signcard=="start") {
+        //每天早打卡
+        if (hours>=6&&hours<9&&signcard=="start") {
             log("sign");
             GM_setValue("signcard","stop");
-            window.location.href='https://wqsh.jd.com/pingou/taskcenter/clock/index.html';
-            setTimeout(function() {
-                window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
-            }, 2000)
+            //window.location.href='https://wqsh.jd.com/pingou/taskcenter/clock/index.html';
+
+        }
+        //判断是否在打卡页面
+        var reg = RegExp(/wqsh.jd.com\/pingou\/taskcenter\/clock/);
+        if (url.match(reg)){
+            log("早打卡");
+
+            //setTimeout(function() {
+            //    window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
+            //}, 2000)
 
         }
 
-
         //判断是否在任务中心
-        var reg = RegExp(/\wqsh.jd.com\/pingou\/taskcenter\/index.html/);
+        reg = RegExp(/\wqsh.jd.com\/pingou\/taskcenter\/index.html/);
         if (url.match(reg)){
             log("任务集市")
             //document.getElementsByClassName("title")[0] ;
             //0:0:0~0:0:0重置
-            if (reload=="start") {
+            if (hours>=7&&hours<=8&&reload=="start") {
                 window.location.reload();
                 GM_setValue("reload","stop");
             }

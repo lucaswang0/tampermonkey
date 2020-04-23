@@ -11,8 +11,10 @@
 // @description 京东财福岛.自动完成任务/自动偷钱币/自动收取打工仔的钱币 F12调试模式手机模式：https://wqs.jd.com/fortune_island/index.html#
 // ==/UserScript==
 (function() {
-
-    setTimeout(function(){lifecycle();},4000);
+    setTimeout(function(){
+    	reloadpage();
+    	lifecycle();
+    	},4000);
 })();
 
 function sleep(ms) {
@@ -27,6 +29,24 @@ function log(text1,text2,text3) {
     console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
 }
 
+
+function reloadpage() {
+	    let timeid = setInterval(function() {
+        var myDate = new Date();
+        var hours=myDate.getHours();
+        var mins=myDate.getMinutes();
+        var secs=myDate.getSeconds();
+        var url=window.location.href;
+
+        //每4小时刷新一下当前页面
+        var reload=(hours%4);
+        if (reload==0&&mins==0&&secs<10) {
+            window.location.reload();
+        };
+    }, 60000);
+}
+
+
 function lifecycle() {
     log('奥利给！！！京喜财富岛，开干~');
     log(new Date());
@@ -38,27 +58,23 @@ function lifecycle() {
 
     let timeid = setInterval(function() {
 
-
-
         var myDate = new Date();
         var hours=myDate.getHours();
         var mins=myDate.getMinutes();
         var secs=myDate.getSeconds();
 
-        //0:6:0~0:0:10刷新一次
-        if (hours==6&&mins==0&&(secs>=0&&secs<=10)) {
-            window.location.reload();
-        }
-
-
         var now_time=myDate.toLocaleString();
         log(now_time);
 
         //岛主
-        if (document.getElementsByClassName("is-has-money")[0]) {
+        if (document.getElementsByClassName("is-has-money")[0]||document.getElementsByClassName("is-has-money")[1]) {
             if (document.getElementsByClassName("is-has-money")[0].className=="is-has-money") {
                 log("岛主收钱")
                 document.getElementsByClassName("is-has-money")[0].click();
+            }
+            if (document.getElementsByClassName("is-has-money")[1].className=="is-has-money") {
+                log("岛主收钱")
+                document.getElementsByClassName("is-has-money")[1].click();
             }
         }
 
@@ -158,7 +174,5 @@ function lifecycle() {
                 window.location.replace("https://wqs.jd.com/fortune_island/index.html#");
             },6000);
         }
-
-
-    }, 1800000);
+    }, 1200000);
 }
