@@ -7,7 +7,7 @@
 // @match       https://wqsh.jd.com/pingou/taskcenter/clock/index.html
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.0
+// @version     1.1
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
 // @description 京东惊喜打卡任务. F12调试模式手机模式：https://wqsh.jd.com/pingou/taskcenter/index.html
