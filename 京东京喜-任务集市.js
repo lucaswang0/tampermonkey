@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        京东京喜-任务集市
-// @namespace  aaaa
+// @namespace   https://greasyfork.org/zh-CN/scripts/402031-%E4%BA%AC%E4%B8%9C%E4%BA%AC%E5%96%9C-%E4%BB%BB%E5%8A%A1%E9%9B%86%E5%B8%82
 // @match       https://wqsh.jd.com/pingou/taskcenter/index.html*
 // @match       https://wqsh.jd.com/pingou/task_center/task/index.html?tasktype=3
 // @match       https://wqitem.jd.com/item/view?sku=*
