@@ -7,7 +7,7 @@
 // @match       https://active.jd.com/forever/btgoose/*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.5
+// @version     1.6
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
 // @description 京东里面的一些小游戏. F12调试模式手机模式：https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html

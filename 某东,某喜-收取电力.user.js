@@ -7,7 +7,7 @@
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html?*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     2.0
+// @version     2.1
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
 // @description 京东惊喜梦工厂. F12调试模式手机模式：https://wqs.jd.com/pingou/dream_factory/index.html

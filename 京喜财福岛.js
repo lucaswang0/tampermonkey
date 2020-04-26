@@ -5,7 +5,7 @@
 // @match       https://wq.jd.com/webportal/event/*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.1
+// @version     1.2
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
 // @description 京东财福岛.自动完成任务/自动偷钱币/自动收取打工仔的钱币 F12调试模式手机模式：https://wqs.jd.com/fortune_island/index.html#
