@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        ¾©¶«¾©Ï²-ÈÎÎñ¼¯ÊĞ
+// @name        äº¬ä¸œäº¬å–œ-ä»»åŠ¡é›†å¸‚
 // @namespace   https://greasyfork.org/zh-CN/scripts/402031-%E4%BA%AC%E4%B8%9C%E4%BA%AC%E5%96%9C-%E4%BB%BB%E5%8A%A1%E9%9B%86%E5%B8%82
 // @match       https://wqsh.jd.com/pingou/taskcenter/index.html*
 // @match       https://wqsh.jd.com/pingou/task_center/task/index.html?tasktype=3
@@ -10,7 +10,7 @@
 // @version     1.2
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
-// @description ¾©¶«¾ªÏ²´ò¿¨ÈÎÎñ. F12µ÷ÊÔÄ£Ê½ÊÖ»úÄ£Ê½£ºhttps://wqsh.jd.com/pingou/taskcenter/index.html
+// @description äº¬ä¸œæƒŠå–œæ‰“å¡ä»»åŠ¡. F12è°ƒè¯•æ¨¡å¼æ‰‹æœºæ¨¡å¼ï¼šhttps://wqsh.jd.com/pingou/taskcenter/index.html
 // ==/UserScript==
 (function() {
     setTimeout(function(){
@@ -40,7 +40,7 @@ function reloadpage() {
         var secs=myDate.getSeconds();
         var url=window.location.href;
 
-        //Ã¿4Ğ¡Ê±Ë¢ĞÂÒ»ÏÂµ±Ç°Ò³Ãæ
+        //æ¯4å°æ—¶åˆ·æ–°ä¸€ä¸‹å½“å‰é¡µé¢
         var reload=(hours%4);
         if (reload==0&&mins==0&&secs<10) {
             window.location.reload();
@@ -49,10 +49,10 @@ function reloadpage() {
 }
 
 function lifecycle() {
-    log('°ÂÀû¸ø£¡£¡£¡¾©Ï²ÈÎÎñ¼¯ÊĞ£¬¿ª¸É~');
+    log('å¥¥åˆ©ç»™ï¼ï¼ï¼äº¬å–œä»»åŠ¡é›†å¸‚ï¼Œå¼€å¹²~');
     log(new Date());
 
-    //³õÊ¼»¯±äÁ¿
+    //åˆå§‹åŒ–å˜é‡
     var reload = GM_getValue("reload");
     if (typeof(reload)=="undefined") {
         GM_setValue("reload","start");
@@ -89,17 +89,17 @@ function lifecycle() {
             GM_setValue("signcard","start");
         }
 
-        //Ã¿ÌìÔç´ò¿¨
+        //æ¯å¤©æ—©æ‰“å¡
         if (hours>=6&&hours<9&&signcard=="start") {
             log("sign");
             GM_setValue("signcard","stop");
             //window.location.href='https://wqsh.jd.com/pingou/taskcenter/clock/index.html';
 
         }
-        //ÅĞ¶ÏÊÇ·ñÔÚ´ò¿¨Ò³Ãæ
+        //åˆ¤æ–­æ˜¯å¦åœ¨æ‰“å¡é¡µé¢
         var reg = RegExp(/wqsh.jd.com\/pingou\/taskcenter\/clock/);
         if (url.match(reg)){
-            log("Ôç´ò¿¨");
+            log("æ—©æ‰“å¡");
 
             //setTimeout(function() {
             //    window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
@@ -107,12 +107,12 @@ function lifecycle() {
 
         }
 
-        //ÅĞ¶ÏÊÇ·ñÔÚÈÎÎñÖĞĞÄ
+        //åˆ¤æ–­æ˜¯å¦åœ¨ä»»åŠ¡ä¸­å¿ƒ
         reg = RegExp(/\wqsh.jd.com\/pingou\/taskcenter\/index.html/);
         if (url.match(reg)){
-            log("ÈÎÎñ¼¯ÊĞ")
+            log("ä»»åŠ¡é›†å¸‚")
             //document.getElementsByClassName("title")[0] ;
-            //0:0:0~0:0:0ÖØÖÃ
+            //0:0:0~0:0:0é‡ç½®
             if (hours>=7&&hours<=8&&reload=="start") {
                 window.location.reload();
                 GM_setValue("reload","stop");
@@ -122,13 +122,13 @@ function lifecycle() {
             }
         }
 
-        //ÅĞ¶ÏÊÇ·ñÔÚ×öÈÎÎñÒ³Ãæ
+        //åˆ¤æ–­æ˜¯å¦åœ¨åšä»»åŠ¡é¡µé¢
         reg = RegExp(/\wqsh.jd.com\/pingou\/task_center\/task/);
         if (url.match(reg)){
-            log("ÈÎÎñÒ³Ãæ")
+            log("ä»»åŠ¡é¡µé¢")
             if (document.getElementsByClassName("nav_item cur")[0]) {
                 var i=0;
-                //³õÊ¼»¯Íê³ÉÈÎÎñÊı
+                //åˆå§‹åŒ–å®Œæˆä»»åŠ¡æ•°
                 var j=0;
                 var tasklist=document.getElementsByClassName("sku_list")[0].children.length;
                 while(i<tasklist) {
@@ -139,7 +139,7 @@ function lifecycle() {
                     }
                     i++;
                     if (j==tasklist) {
-                        log("ÈÎÎñÒÑÈ«²¿Íê³É")
+                        log("ä»»åŠ¡å·²å…¨éƒ¨å®Œæˆ")
                         GM_setValue("jobs","stop");
                         setTimeout(function() {
                             window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
@@ -154,11 +154,11 @@ function lifecycle() {
             }
         }
 
-        //ÅĞ¶ÏÊÇ·ñÔÚÍê³ÉÈÎÎñÒ³Ãæ
+        //åˆ¤æ–­æ˜¯å¦åœ¨å®Œæˆä»»åŠ¡é¡µé¢
         reg = RegExp(/wqitem.jd.com\/item\/view/);
         if (url.match(reg)){
-            log("ÕıÔÚÍê³ÉÈÎÎñ")
-            //ÑÓÊ±2Ãë£¬·µ»Øµ½ÉÏÒ»Ò³
+            log("æ­£åœ¨å®Œæˆä»»åŠ¡")
+            //å»¶æ—¶2ç§’ï¼Œè¿”å›åˆ°ä¸Šä¸€é¡µ
             setTimeout(function() {
                 log("go back")
                 window.history.back();
