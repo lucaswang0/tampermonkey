@@ -1,16 +1,17 @@
 // ==UserScript==
 // @name        京东京喜-任务集市
-// @namespace   https://greasyfork.org/zh-CN/scripts/402031-%E4%BA%AC%E4%B8%9C%E4%BA%AC%E5%96%9C-%E4%BB%BB%E5%8A%A1%E9%9B%86%E5%B8%82
+// @namespace  aaaa
 // @match       https://wqsh.jd.com/pingou/taskcenter/index.html*
 // @match       https://wqsh.jd.com/pingou/task_center/task/index.html?tasktype=3
 // @match       https://wqitem.jd.com/item/view?sku=*
 // @match       https://wqsh.jd.com/pingou/taskcenter/clock/index.html
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.2
+// @version     1.3
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
 // @description 京东惊喜打卡任务. F12调试模式手机模式：https://wqsh.jd.com/pingou/taskcenter/index.html
+// @downloadURL none
 // ==/UserScript==
 (function() {
     setTimeout(function(){
@@ -25,11 +26,12 @@ function sleep(ms) {
     while (new Date().getTime() < start + ms);
 }
 
-function log(text1,text2,text3) {
-    if (typeof(text2) == "undefined") {text2=""};
-    if (typeof(text3) == "undefined") {text3=""};
-    var text='%c ' + text1 + text2 + text3
-    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
+function log() {
+    var text = '%c';
+    for(var i=0;i<arguments.length;i++){
+        text += arguments[i]+' ';
+    }
+    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold');
 }
 
 function reloadpage() {
@@ -42,10 +44,10 @@ function reloadpage() {
 
         //每4小时刷新一下当前页面
         var reload=(hours%4);
-        if (reload==0&&mins==0&&secs<10) {
+        if (reload==0&&mins==0&&secs<11) {
             window.location.reload();
         };
-    }, 60000);
+    }, 10000);
 }
 
 function lifecycle() {
@@ -65,6 +67,10 @@ function lifecycle() {
     if (typeof(signcard)=="undefined") {
         GM_setValue("signcard","start");
     }
+    var jump = GM_getValue("jump");
+    if (typeof(signcard)=="undefined") {
+        GM_setValue("jump","start");
+    }
 
     var start_time = new Date();
     start_time=start_time.toLocaleString();
@@ -82,30 +88,39 @@ function lifecycle() {
         reload = GM_getValue("reload");
         jobs = GM_getValue("jobs");
         signcard = GM_getValue("signcard");
+        jump = GM_getValue("jump");
 
         if (hours>=0&&hours<=5) {
             GM_setValue("reload","start");
             GM_setValue("jobs","start");
             GM_setValue("signcard","start");
+            GM_setValue("jump","start");
         }
 
-        //每天早打卡
-        if (hours>=6&&hours<9&&signcard=="start") {
-            log("sign");
-            GM_setValue("signcard","stop");
-            //window.location.href='https://wqsh.jd.com/pingou/taskcenter/clock/index.html';
-
+        //log("reload:",reload,"jobs:",jobs,"signcard:",signcard,"jump:",jump);
+        //6点到9点间强制跳到早打开页面
+        if (hours>=6&&hours<9&&mins>=1&&signcard=="start"&&jump=="start") {
+            window.location.href='https://wqsh.jd.com/pingou/taskcenter/clock/index.html';
+            GM_setValue("jump","stop");
         }
+
         //判断是否在打卡页面
-        var reg = RegExp(/wqsh.jd.com\/pingou\/taskcenter\/clock/);
-        if (url.match(reg)){
-            log("早打卡");
-
-            //setTimeout(function() {
-            //    window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
-            //}, 2000)
-
+        reg = RegExp(/wqsh.jd.com\/pingou\/taskcenter\/clock/);
+        if (hours>=6&&hours<9&&signcard=="start"&&url.match(reg)){
+            log("立即打卡");
+            if (document.getElementsByClassName("wqvue-form buttons")[0]) {
+                var reg=RegExp(/立即打卡/);
+                var signed=document.getElementsByClassName("wqvue-form buttons")[0].innerText
+                if (signed.match(reg)){
+                    document.getElementsByClassName("cbtn big long")[0].click()
+                    GM_setValue("signcard","stop");
+                    setTimeout(function() {
+                        window.location.href='https://wqsh.jd.com/pingou/taskcenter/index.html';
+                    }, 2000)
+                }
+            }
         }
+
 
         //判断是否在任务中心
         reg = RegExp(/\wqsh.jd.com\/pingou\/taskcenter\/index.html/);
@@ -113,7 +128,7 @@ function lifecycle() {
             log("任务集市")
             //document.getElementsByClassName("title")[0] ;
             //0:0:0~0:0:0重置
-            if (hours>=7&&hours<=8&&reload=="start") {
+            if (hours>=7&&hours<9&&reload=="start") {
                 window.location.reload();
                 GM_setValue("reload","stop");
             }
@@ -149,8 +164,12 @@ function lifecycle() {
             }
 
             if (document.getElementsByClassName("modal_close")[0]) {
-                log("close")
+                log("modal_close")
                 document.getElementsByClassName("modal_close")[0].click()
+            }
+            if (document.getElementsByClassName("btn red")[0]) {
+                log("btn red")
+                document.getElementsByClassName("btn red")[0].click()
             }
         }
 
@@ -165,7 +184,7 @@ function lifecycle() {
             }, 2000)
         }
 
-    }, 60000);
+    }, 30000);
 }
 
 
