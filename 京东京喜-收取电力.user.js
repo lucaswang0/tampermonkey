@@ -161,7 +161,7 @@ function lifecycle() {
                         }
                     }
                 }, 1000)
-             //显示电力-----
+                //显示电力-----
                 setTimeout(function() {
                     //获取当前电量
                     var start_count=GM_getValue("start_count");
@@ -175,23 +175,24 @@ function lifecycle() {
                 //显示电力-----
             }
         } else if (document.getElementsByClassName("floating")[0]) {
-                var secStr = document.querySelector(".floating_title").innerText;
-                log("监测倒计时 ->> " + secStr)
-                if (secStr === "已完成") {
-                    log("完成啦")
-                    document.getElementsByClassName("floating_name")[0].click() || document.getElementsByClassName("floating_finish")[0].click()
-                    document.getElementsByClassName("floating_finish")[0].click();
-                    clearInterval(timeid);
-                    setTimeout(function() {
-                        log("重新开始2")
-                        lifecycle();
-                    }, 2000)
-                } else if (secStr === "10s") {
-                    log("滑动页面")
-                    document.querySelector(".scroll-view").scrollTo(0, 800);
-                }
+            var secStr = document.querySelector(".floating_title").innerText;
+            log("监测倒计时 ->> " + secStr)
+            if (secStr === "已完成") {
+                log("完成啦")
+                document.getElementsByClassName("floating_name")[0].click() || document.getElementsByClassName("floating_finish")[0].click()
+                document.getElementsByClassName("floating_finish")[0].click();
+                clearInterval(timeid);
+                setTimeout(function() {
+                    log("重新开始2")
+                    lifecycle();
+                }, 2000)
+            } else if (secStr === "10s") {
+                log("滑动页面")
+                document.querySelector(".scroll-view").scrollTo(0, 800);
             }
-
+        }
+    }, 1000)
+    }
 
 //自动收已完成的任务
 function tasklist() {
@@ -225,16 +226,12 @@ function tasklist() {
                     };
                     i++;
                 };
-
                 setTimeout(function() {
                     //close
                     document.getElementsByClassName("close")[0].click();
                     //log("close")
                 }, 2000)
-
             };
         }, 4000)
     }, 1200000);
-
-
 }
