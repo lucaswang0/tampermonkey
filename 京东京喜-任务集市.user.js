@@ -1,17 +1,16 @@
 // ==UserScript==
 // @name        京东京喜-任务集市
-// @namespace  aaaa
+// @namespace   https://greasyfork.org/zh-CN/scripts/402031
 // @match       https://wqsh.jd.com/pingou/taskcenter/index.html*
 // @match       https://wqsh.jd.com/pingou/task_center/task/index.html?tasktype=3
 // @match       https://wqitem.jd.com/item/view?sku=*
 // @match       https://wqsh.jd.com/pingou/taskcenter/clock/index.html
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.3
+// @version     1.4
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
-// @description 京东惊喜打卡任务. F12调试模式手机模式：https://wqsh.jd.com/pingou/taskcenter/index.html
-// @downloadURL none
+// @description 京东惊喜打卡任务.每天6～9点自动完成打卡任务，7～9点会去完成浏览任务。 F12调试模式手机模式：https://wqsh.jd.com/pingou/taskcenter/index.html
 // ==/UserScript==
 (function() {
     setTimeout(function(){
@@ -38,14 +37,18 @@ function reloadpage() {
     let timeid = setInterval(function() {
         var myDate = new Date();
         var hours=myDate.getHours();
-        var mins=myDate.getMinutes();
-        var secs=myDate.getSeconds();
-        var url=window.location.href;
-
+        var reload_page = GM_getValue("reload_page");
+        if (typeof(reload_page)=="undefined") {
+            GM_setValue("reload_page","start");
+        }
         //每4小时刷新一下当前页面
         var reload=(hours%4);
-        if (reload==0&&mins==0&&secs<11) {
+        if (reload==0&&reload_page=="start") {
+            GM_setValue("reload_page","stop")
             window.location.reload();
+        };
+        if (reload!=0&&reload_page=="stop") {
+            GM_setValue("reload_page","start")
         };
     }, 10000);
 }

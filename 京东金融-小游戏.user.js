@@ -1,16 +1,16 @@
 // ==UserScript==
 // @name        京东金融-小游戏
-// @namespace   https://greasyfork.org/zh-CN/scripts/400136-%E4%BA%AC%E4%B8%9C%E9%87%91%E8%9E%8D-%E5%B0%8F%E6%B8%B8%E6%88%8F
-// @match			  https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html
+// @namespace   https://greasyfork.org/zh-CN/scripts/400136
+// @match	    https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/*
 // @match       https://*.jr.jd.com/uc-fe-wxgrowing/moneytree/index/*
 // @match       https://active.jd.com/forever/btgoose/*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     1.6
+// @version     1.7
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
-// @description 京东里面的一些小游戏. F12调试模式手机模式：https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html
+// @description 京东金融里面的一些小游戏. 实际上就猪和鹅可以挂挂。有可能会出现“提示抱歉，您暂时无法参加此活动”/“请使用金融APP”这个就不能用了。F12调试模式手机模式：https://prodev.m.jd.com/jdjr/active/4VE6AewA8CFAiLtykFc2wEjbWaVy/index.html
 // ==/UserScript==
 
 (function() {
@@ -23,27 +23,32 @@
     }, 4000);
 })();
 
-function log(text1,text2,text3) {
-    if (typeof(text2) == "undefined") {text2=""};
-    if (typeof(text3) == "undefined") {text3=""};
-    var text='%c ' + text1 + text2 + text3
-    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
+function log() {
+    var text = '%c';
+    for(var i=0;i<arguments.length;i++){
+        text += arguments[i]+' ';
+    }
+    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold');
 }
 
 function reloadpage() {
     let timeid = setInterval(function() {
         var myDate = new Date();
         var hours=myDate.getHours();
-        var mins=myDate.getMinutes();
-        var secs=myDate.getSeconds();
-        var url=window.location.href;
-
+        var reload_page = GM_getValue("reload_page");
+        if (typeof(reload_page)=="undefined") {
+            GM_setValue("reload_page","start");
+        }
         //每4小时刷新一下当前页面
         var reload=(hours%4);
-        if (reload==0&&mins==0&&secs<10) {
+        if (reload==0&&reload_page=="start") {
+            GM_setValue("reload_page","stop")
             window.location.reload();
         };
-    }, 60000);
+        if (reload!=0&&reload_page=="stop") {
+            GM_setValue("reload_page","start")
+        };
+    }, 10000);
 }
 
 function Everyoneisplaying() {

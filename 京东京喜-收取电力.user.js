@@ -1,16 +1,16 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        京东京喜-收取电力
-// @namespace   https://greasyfork.org/zh-CN/scripts/400135-%E6%9F%90%E4%B8%9C-%E6%9F%90%E5%96%9C-%E6%94%B6%E5%8F%96%E7%94%B5%E5%8A%9B
+// @namespace   https://greasyfork.org/zh-CN/scripts/400135
 // @match       https://wqs.jd.com/pingou/dream_factory/*.html
 // @match       https://wqs.jd.com/pingou/dream_factory/*.html?*
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html
 // @match       https://wqs.jd.com/pingou/dream_factory/market.html?*
 // @grant       GM_getValue
 // @grant       GM_setValue
-// @version     2.1
+// @version     2.2
 // @author      lucas(xxxxx@qq.com)
 // @update      lucas(xxxxx@qq.com)
-// @description 京东惊喜梦工厂. F12调试模式手机模式：https://wqs.jd.com/pingou/dream_factory/index.html
+// @description 京东惊喜梦工厂.自动收电力，如需自动加电力把 hours>=70改为 hours>=7就可以了。还有在货架可加工商品点进去后会自动抢商品。 F12调试模式手机模式：https://wqs.jd.com/pingou/dream_factory/index.html
 // ==/UserScript==
 (function() {
     setTimeout(function(){
@@ -25,11 +25,12 @@ function sleep(ms) {
     while (new Date().getTime() < start + ms);
 }
 
-function log(text1,text2,text3) {
-    if (typeof(text2) == "undefined") {text2=""};
-    if (typeof(text3) == "undefined") {text3=""};
-    var text='%c ' + text1 + text2 + text3
-    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
+function log() {
+    var text = '%c';
+    for(var i=0;i<arguments.length;i++){
+        text += arguments[i]+' ';
+    }
+    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold');
 }
 
 
@@ -37,17 +38,25 @@ function reloadpage() {
     let timeid = setInterval(function() {
         var myDate = new Date();
         var hours=myDate.getHours();
-        var mins=myDate.getMinutes();
-        var secs=myDate.getSeconds();
-        var url=window.location.href;
-
+        var reload_page = GM_getValue("reload_page");
+        if (typeof(reload_page)=="undefined") {
+            GM_setValue("reload_page","start");
+        }
         //每4小时刷新一下当前页面
         var reload=(hours%4);
-        if (reload==0&&mins==0&&secs<10) {
+        if (reload==0&&reload_page=="start") {
+            GM_setValue("reload_page","stop")
             window.location.reload();
         };
-    }, 60000);
+        if (reload!=0&&reload_page=="stop") {
+            GM_setValue("reload_page","start")
+        };
+    }, 10000);
 }
+
+
+
+
 
 
 function lifecycle() {
@@ -55,15 +64,23 @@ function lifecycle() {
     log('每天7～21点之间自动加电~');
     log(new Date());
 
+    var myDate = new Date();
+    var hours=myDate.getHours();
+    var mins=myDate.getMinutes();
+    var secs=myDate.getSeconds();
+    var start_time = new Date();
+    start_time=start_time.toLocaleString();
+    GM_setValue("start_time",start_time);
+
+
+
     //初始化加电状态
     var add_dream = GM_getValue("add_dream");
     if (typeof(add_dream)=="undefined") {
         GM_setValue("add_dream","加电");
     }
 
-    var start_time = new Date();
-    start_time=start_time.toLocaleString();
-    GM_setValue("start_time",start_time);
+
 
     let timeid = setInterval(function() {
 
@@ -75,7 +92,7 @@ function lifecycle() {
         //点击需要抢购商品的页面，会自动抢购，该功能未测试。
         if (document.getElementsByClassName("sku_detail_btn")[0]) {
             var a=0;
-            while (a<1000) {
+            while (a<10) {
                 log("正在抢购");
                 if (document.getElementsByClassName("sku_detail_btn")[0].className=="sku_detail_btn") {
                     document.getElementsByClassName("sku_detail_btn")[0].click();
@@ -84,19 +101,16 @@ function lifecycle() {
             }
         }
 
-        //获取当前电量
-        var start_count=GM_getValue("start_count");
-        if (typeof(start_count)=="undefined"||start_count==0) {
-            start_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
-            GM_setValue("start_count",start_count);
-        }
+
 
         //自动加电力 7~21点，电力大于100
         add_dream = GM_getValue("add_dream");
-        var now_time=myDate.toLocaleString();
-        var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
+
+        if (document.getElementsByClassName("top-l-info-n")[0]) {
+            var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
+        }
         //console.log(mytime + " add_dream:" + add_dream);
-        if (hours>=7&&hours<=20&&add_dream=="加电"&&now_count>=100) {
+        if (hours>=70&&hours<=20&&add_dream=="加电"&&now_count>=100) {
             log("工作时间，加电力。")
             document.getElementsByClassName("icon icon_add")[0].click();
             if (document.getElementsByClassName("g_error_body")[0]) {
@@ -120,38 +134,63 @@ function lifecycle() {
             var num = document.querySelector(".alternator-num-n").innerText;
             num = parseFloat(num);
             //console.log("监测电力值 ->> " + num);
-            if (num >= 200&&hours>=6) {
+            if (num >= 300&&hours>=6) {
                 document.getElementById("alternator").click();
-                if (document.getElementsByClassName('simple_dialog_txt_btn_txt')[0]) {
-                    document.getElementsByClassName('simple_dialog_txt_btn_txt')[0].click();
-                }
-
-                if (document.getElementsByClassName("close")[0]) {
-                    document.getElementsByClassName("close")[0].click();
-                }
-
                 setTimeout(function() {
+                    if (document.getElementsByClassName('simple_dialog_btn')[0]) {
+                        reg=RegExp(/逛集市翻倍电力/);
+                        var market=document.getElementsByClassName('simple_dialog_btn')[0].innerText
+                        if (market.match(reg)){
+                            document.getElementsByClassName('simple_dialog_btn')[0].click()
+                            clearInterval(timeid);
+                            setTimeout(function() {
+                                log("重新开始0")
+                                lifecycle();
+                            }, 2000)
+                        } else {
+                            setTimeout(function() {
+                                if (document.getElementsByClassName('simple_dialog_txt_btn_txt')[0]) {
+                                    document.getElementsByClassName('simple_dialog_txt_btn_txt')[0].click();
+                                    log("重新开始1")
+                                    //lifecycle();
+                                }
+                                if (document.getElementsByClassName("close")[0]) {
+                                    document.getElementsByClassName("close")[0].click();
+                                }
+                            }, 2000)
+                        }
+                    }
+                }, 1000)
+             //显示电力-----
+                setTimeout(function() {
+                    //获取当前电量
+                    var start_count=GM_getValue("start_count");
+                    if (typeof(start_count)=="undefined"||start_count==0) {
+                        start_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
+                        GM_setValue("start_count",start_count);
+                    }
+                    var now_time=myDate.toLocaleString();
                     var now_count= document.getElementsByClassName("top-l-info-n")[0].innerText;
-                    log("开始时间：" + start_time + " 开始电力：" + start_count,'\n'," 当前时间: " + now_time + " 现在电力：" + now_count);},5000);
+                    log("开始时间：" + start_time + " 开始电力：" + start_count,'\n',"当前时间: " + now_time + " 现在电力：" + now_count);},5000);
+                //显示电力-----
             }
-
-        } //else if (document.querySelector(".floating_title===========")) {
-        //     var secStr = document.querySelector(".floating_title").innerText;
-        //     console.log("监测倒计时 ->> " + secStr);
-        //     if (secStr === "已完成") {
-        //         console.log("完成啦")
-        //         document.querySelector(".floating_title").click();
-        //         clearInterval(timeid);
-        //         setTimeout(function() {
-        //             lifecycle();
-        //         }, 2000)
-        //     } else if (secStr === "30s") {
-        //         console.log("滑动页面")
-        //         document.querySelector(".scroll-view").scrollTo(0, 800);
-        //     }
-        // }
-    }, 10000);
-}
+        } else if (document.getElementsByClassName("floating")[0]) {
+                var secStr = document.querySelector(".floating_title").innerText;
+                log("监测倒计时 ->> " + secStr)
+                if (secStr === "已完成") {
+                    log("完成啦")
+                    document.getElementsByClassName("floating_name")[0].click() || document.getElementsByClassName("floating_finish")[0].click()
+                    document.getElementsByClassName("floating_finish")[0].click();
+                    clearInterval(timeid);
+                    setTimeout(function() {
+                        log("重新开始2")
+                        lifecycle();
+                    }, 2000)
+                } else if (secStr === "10s") {
+                    log("滑动页面")
+                    document.querySelector(".scroll-view").scrollTo(0, 800);
+                }
+            }
 
 
 //自动收已完成的任务
@@ -160,7 +199,7 @@ function tasklist() {
     let timeid = setInterval(function() {
         //log("task2");
 
-        //shouqu
+        //收取昨日别人帮忙打工的电力
         if (document.getElementsByClassName("m_power_bolt p0 anim")[0]) {
             //log("task3");
             document.getElementsByClassName("m_power_bolt p0 anim")[0].click();

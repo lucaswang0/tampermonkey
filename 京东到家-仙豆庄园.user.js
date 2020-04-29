@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        京东到家-仙豆庄园
-// @namespace   https://greasyfork.org/zh-CN/scripts/400137-%E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6-%E4%BB%99%E8%B1%86%E5%BA%84%E5%9B%AD
+// @namespace   https://greasyfork.org/zh-CN/scripts/400137
 // @match       https://daojia.jd.com/taroh5/h5dist/*
 // @grant       none
-// @version     1.4
+// @version     1.5
 // @author      Lucas(?????????@qq.com)
 // @update      Lucas(?????????@qq.com)
 // @description 京东到家的仙豆庄园，每天自动收水，浇水。 F12调试模式手机模式： https://daojia.jd.com/
@@ -16,27 +16,32 @@
     }, 4000);
 })();
 
-function log(text1,text2,text3) {
-    if (typeof(text2) == "undefined") {text2=""};
-    if (typeof(text3) == "undefined") {text3=""};
-    var text='%c ' + text1 + text2 + text3
-    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold;text-decoration: underline;');
+function log() {
+    var text = '%c';
+    for(var i=0;i<arguments.length;i++){
+        text += arguments[i]+' ';
+    }
+    console.log(text, 'color: #43bb88;font-size: 14px;font-weight: bold');
 }
 
 function reloadpage() {
     let timeid = setInterval(function() {
         var myDate = new Date();
         var hours=myDate.getHours();
-        var mins=myDate.getMinutes();
-        var secs=myDate.getSeconds();
-        var url=window.location.href;
-
+        var reload_page = GM_getValue("reload_page");
+        if (typeof(reload_page)=="undefined") {
+            GM_setValue("reload_page","start");
+        }
         //每4小时刷新一下当前页面
         var reload=(hours%4);
-        if (reload==0&&mins==0&&secs<10) {
+        if (reload==0&&reload_page=="start") {
+            GM_setValue("reload_page","stop")
             window.location.reload();
         };
-    }, 60000);
+        if (reload!=0&&reload_page=="stop") {
+            GM_setValue("reload_page","start")
+        };
+    }, 10000);
 }
 
 
