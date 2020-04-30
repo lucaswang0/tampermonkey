@@ -39,6 +39,7 @@ function reloadpage() {
         if (typeof(reload_page)=="undefined") {
             GM_setValue("reload_page","start");
         }
+
         //每4小时刷新一下当前页面
         var reload=(hours%4);
         if (reload==0&&reload_page=="start") {
@@ -48,6 +49,7 @@ function reloadpage() {
         if (reload!=0&&reload_page=="stop") {
             GM_setValue("reload_page","start")
         };
+        log("reload_page",reload_page,"reload",reload)
     }, 10000);
 }
 
@@ -192,10 +194,12 @@ function pig() {
         //小猪吃完了么,看看能否喂食了
         if (document.getElementsByClassName("draw-feed-btn")[0]) {
             log("喂小猪吃食啦！");
-            document.getElementsByClassName("draw-trough-img")[0].click();
-            //document.getElementsByClassName("feed-list")[0].children[0].click();
-            document.getElementsByClassName("feed-item-btn")[0].click();
-            document.getElementsByClassName("feed-close")[0].click();
+            setTimeout(function(){
+                document.getElementsByClassName("draw-trough-img")[0].click();
+                //document.getElementsByClassName("feed-list")[0].children[0].click();
+                document.getElementsByClassName("feed-item-btn")[0].click();
+                document.getElementsByClassName("feed-close")[0].click();
+            }, 1000);
         };
     }, 2000);
 }
